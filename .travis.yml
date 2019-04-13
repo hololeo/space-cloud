@@ -1,0 +1,28 @@
+services:
+    - docker
+
+language: go
+
+go:
+  -  "1.12"
+
+env:
+  - GO111MODULE=on  
+
+install:
+  - go build
+  # - docker build --tag=spaceuptech/space-cloud:latest .
+  
+script:
+  - go test ./...
+
+deploy:
+  # skip_cleanup: true
+  provider: script
+  script: bash deploy.sh
+  on:
+    branch: travis
+
+
+after_script:
+  - cat /tmp/results.xml
